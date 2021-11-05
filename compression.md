@@ -14,10 +14,10 @@ There are many ways to compare algorithms. The primary comparison is based on tw
 - time taken for the algorithm to solve the problem, a.k.a time complexity
 - space complexity
 
-## 1.2.1 Time complexity
+### 1.2.1 Time complexity
 As the name suggests, it has to do with the time taken by the algorithm to solve the problem. In the above example, in terms of _time_, the shorter path might be the way to go, and hence, a person in a hurry (or not) prefers to use the shorter path. Formally, time complexity is the amount of time taken by an algorithm to run, as a function of the length of the input. It is denoted by O(t) , which is called the "Big-O" notation. In general, an algorithm with time complexity O(t<sub>1</sub>) is better than an algorithm with time complexity O(t<sub>2</sub>), when t<sub>1</sub> < t<sub>2</sub> (by better, it just means that it has a quicker solving time)
 
-## 1.2.2 Space complexity
+### 1.2.2 Space complexity
 Again, from the name, it has to do with the space taken by the algorithm to solve the problem. Formally space complexity is a measure of how efficient your code is in terms of memory used, with respect to input size. Similar to time complexity, an algorithm with space complexity O(s<sub>1</sub>) is better than an algorithm with space complexity O(s<sub>2</sub>), when s<sub>1</sub> < s<sub>2</sub> (by better, it just means that it has a lesser space requirement for the same input). (it is also represented in the big O notation)
 
 Ideally, a good algorithm must have low time as well as space complexity. Unfortunately, such an algorithm seldom exists in the real world, and the choice of which algorithm to use depends largely on what/where it is being used. For instance, consider sorting algorithms. Selection sort and merge sort are among the famous sorting algorithms. Selection sort has a time complexity of O(N<sup>2</sup>) and a space complexity of O(1) [O(1) means constant, and is independent of the size of the input], where N is the number of elements to be sorted. Merge sort has a time complexity of O(NlogN) and a space complexity of O(N). Suppose we have a large number of elements to be sorted (large N). Then, if we run the sorting on a system with very limited memory, we have to use selection sort, as it has a lesser memory need (space complexity) than mergesort, and when we want the sorting to be done fast, we use mergesort, by compromising on memory. Thus, there is most often a compromise on which algorithm to use to solve a problem.
