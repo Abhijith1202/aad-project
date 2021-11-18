@@ -23,4 +23,5 @@ For example, we know that a movie (1080p) takes around 2gb (not considering blur
 ### 2.3.1 Self information
 This was a term coined by Shannon. Suppose we have an event A whose probability of occurence is P(A). Then, _Self information_ of A is given by <br>
 > i(A) = - log<sub>b</sub>P(A)
-<br>where b can be 2 (unit is bits), e (unit is nats) or 10 (unit is hartleys). In general, we take b as 2.
+
+where b can be 2 (unit is bits), e (unit is nats) or 10 (unit is hartleys). In general, we take b as 2.
