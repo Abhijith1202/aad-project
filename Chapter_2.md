@@ -35,3 +35,27 @@ This quantity is called the **entropy** of the experiment. In other words, entro
 > For example, consider the binary sequences 000000 and 010101.
 > 1. in 000000 , P(0)=1, and thus, entropy H = -1logl = 0. Entropy is 0, as we dont need any information to represent which symbol is next in the series, as the series contains only 0s.
 > 2. in 010101 , p(0)=P(1)=0.5, and thus, H= -(0.5log0.5 + 0.5log0.5) [taking base as 2,] = -(-1) = 1. Since base is 2, we get that we need an average of 1 bit to represent each character in the string (which is true)
+
+### 2.3.2 Models
+Designing the data into a good model can be helpful in constructing efficient compression techniques for the data. Some commonly used models are:
+- **Physical model**: Used when we know the _physics_ of the data generation process. An example is speech compression, as knowledge about the physics of speech production can be used to construct a mathematical model for the sampled speech process, and sampled speech can be encoded using this model. (In general, however, the physics of data generation is too complicated to understand, and hence we cannot make such models).
+
+- **Probability model**: Keep the independence assumption and assign probabilities to each letter of the alphabet. Using the probability model, we can construct some very efficient codes to represent the letters in the alphabet . However, these codes are only efficient if our mathematical assumptions are in line with reality.
+
+- **Markov model**: For models used in lossless compression, we use a specific type of Markov process called a *discrete time Markov chain*:
+    - Let {x<sub>i</sub>} be the sequence of observations, then the sequence follows k-th order Markov model if<br> P(x<sub>n</sub>|x<sub>n-1</sub>,....,x<sub>n-k</sub>) = P(x<sub>n</sub>|x<sub>n-1</sub>,....,x<sub>n-k</sub>,...)
+    - This can be stated as: knowledge of the past k symbols is equivalent to the knowledge of the entire past history of the process
+    - Most commonly used Markov model is first order Markov model, ie,  P(x<sub>n</sub>|x<sub>n-1</sub>) = P(x<sub>n</sub>|x<sub>n-1</sub>,x<sub>n-2</sub>,x<sub>n-3</sub>,...)
+
+Markov models are particularly useful in text compression where the probability of the succeeding letter is greatly influenced by the preceding letters.
+
+- Oftentimes, it is not easy to use a single model to describe the source. In such cases, we can define a *composite source*, which can be seen as a combination of several sources, with only one source being active at any given time
+
+## 2.3.3 Coding
+Coding is the process of assignment of binary sequences to letters of an alphabet. The set of binary sequences is called a code, and each individual members of the set are called codewords. A trivial example of coding can be taken from the ASCII code of the English alphabet: A is 1000001, and that of a is 1000011. ASCII also contains codes for certain characters like "," (comma, ascii is 0011010). Each ASCII codeword has a fixed, same number of bits, and thus, ASCII is an example of **fixed length code**. 
+
+More often than not, we use lesser number of bits to represent those letters that occur more frequently than others (as reducing the number of bits required, and hence the memory required is the cruz of compression in the first place). The average number of bits per symbol is called the **rate** of the code. A typical example that uses this idea is the Morse code (you probably already know what it is from spy and action movies :) ) in which the codewords that occur more frequently are shorter (E is `·`, while Z is `—··`)
+
+To be useful, a code should not only reduce the length of encoding, but also have the ability to transfer information in an unambiguous manner. Consider the following 3 encodings of the same letters:
+
+![encodingex](images/encodingex.png)
