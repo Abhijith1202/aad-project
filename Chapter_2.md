@@ -58,4 +58,4 @@ More often than not, we use lesser number of bits to represent those letters tha
 
 To be useful, a code should not only reduce the length of encoding, but also have the ability to transfer information in an unambiguous manner. Consider the following 3 encodings of the same letters:
 
-![encodingex](https://github.com/Abhijith1202/aad-project/blob/main/images/encodingex.png?raw=true)
+![encodingex](images/encodingex.png)
