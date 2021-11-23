@@ -99,8 +99,7 @@ As there are many ways to compare algorithms in geneeral, there are a large numb
 
 - In lossy compression, as the reconstruction differs from the original data, we need some way to quantify this _difference_. This quantity is known as **distorion**. Other terms that are also used when talking about differences between the reconstruction and the original are *fidelity and quality*. When we say that the fidelity or quality of a reconstruction is high, we mean that the difference between the reconstruction and the original is small. This *small* is not always mathematical, and often depends on the human perception. Whether an amount of distortion makes the algorithm better or worse totally depends on the context which it is used.
 
-
-Now that the reader has been made familiar with the concepts of compression, in the next chapter, we shall explore different compression algorithms.
-
 ## 2.6 Summary
 We have tried to enter the realm of compression ,from the definition of compression and why it should be used. Then we were introduced into the various terminologies that are commomly used to describe more about the different compression algorithms. We also looked into the two broad divisions of compression algorithms: lossless and lossy compression. Finally, we try to give an introduction on how to compare different compression algorithms.
+
+Now that the reader has been made familiar with the concepts of compression, in the next chapter, we shall explore different compression algorithms.
