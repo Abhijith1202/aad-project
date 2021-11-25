@@ -41,7 +41,7 @@ The algorithm can be summed up as:
     ```
 
 For example, consider a situation as shown below:
-<table>
+<table align="centre">
     <tr>
         <th>Character</th>
         <th>Frequency</th>
