@@ -103,7 +103,7 @@ For example, consider a situation as shown below:
         <td>45</td>
     </tr>
 </table>
-Where IN denotes the internal node
+Where IN denotes the internal node<br>
 Repeat the steps till each of the characters are popped
 
 ![s3](images/huffmanex/s3.jpg)
@@ -208,3 +208,7 @@ The codes are:
         <td>111</td>
     </tr>
 </table>
+
+- Time complexity: deletemin() operation is used 2(n-1) times, and it takes O(logn) complexity (heap). Thus, the overall time complexity of this algorithm is O(nlogn)
+
+The Huffman coding can be used for transmitting text and compression of text documents and fax messages. They are also used by conventional compression formats like PKZIP, GZIP, etc. It is useful in cases where there is a series of frequently occurring characters. The Morse code could be a far-fetched idea from the Huffman coding, as the symbold which occur more frequently are given shorter codes in the language.
