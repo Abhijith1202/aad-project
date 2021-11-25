@@ -41,7 +41,7 @@ The algorithm can be summed up as:
     ```
 
 For example, consider a situation as shown below:
-<table align="centre">
+<table >
     <tr>
         <th>Character</th>
         <th>Frequency</th>
@@ -71,4 +71,140 @@ For example, consider a situation as shown below:
         <td>45</td>
     </tr>
 </table>
-    
+
+1. Build a priority queue (heap) with 6 nodes for the 6 characters.
+2. Ge the 2 minimum freq nodes, ie, a and b and add a new internal node with frequency f = 5+9 = 14
+    ![s2](images/huffmanex/s2.jpeg)
+
+3. Now, the heap contains 6-2+1=5 nodes, as:
+<table >
+    <tr>
+        <th>Character</th>
+        <th>Frequency</th>
+    </tr>
+    <tr>
+        <td>c</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>d</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>e</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>f</td>
+        <td>45</td>
+    </tr>
+</table>
+Where IN denotes the internal node
+Repeat the steps till each of the characters are popped
+
+![s3](images/huffmanex/s3.jpg)
+
+<table >
+    <tr>
+        <th>Character</th>
+        <th>Frequency</th>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>e</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>f</td>
+        <td>45</td>
+    </tr>
+</table>
+
+![s4](images/huffmanex/s4.jpg)
+
+<table >
+    <tr>
+        <th>Character</th>
+        <th>Frequency</th>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>f</td>
+        <td>45</td>
+    </tr>
+</table>
+
+![s5](images/huffmanex/s5.jpg)
+
+<table >
+    <tr>
+        <th>Character</th>
+        <th>Frequency</th>
+    </tr>
+        <td>f</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>IN</td>
+        <td>55</td>
+    </tr>
+</table>
+
+![s6](images/huffmanex/s6.jpg)
+
+Now, the heap contains only 1 element, and we are done!
+While traversing down the tree formed:
+- while moving left, write a 0
+- while moving right, write a 1 
+
+![final](images/huffmanex/final.jpg)
+
+The codes are:
+<table >
+    <tr>
+        <th>Character</th>
+        <th>Code-word</th>
+    </tr>
+    <tr>
+        <td>f</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>c</td>
+        <td>100</td>
+    </tr>
+    <tr>
+        <td>d</td>
+        <td>101</td>
+    </tr>
+    <tr>
+        <td>a</td>
+        <td>1100</td>
+    </tr>
+    <tr>
+        <td>b</td>
+        <td>1101</td>
+    </tr>
+    <tr>
+        <td>e</td>
+        <td>111</td>
+    </tr>
+</table>
