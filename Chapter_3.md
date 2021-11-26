@@ -246,9 +246,9 @@ Part of the Jpeg compression algorithm divides the picture into 8x8 blocks of pi
 ## 3.3 A simple image compression
 We are familiar with the format of Jpeg for pictures that we see widely in out devices. Jpeg is an example of **lossy compression**, but it is quite a complex algorithm. For simplicity's sake, let us take a look at a simpler approach to compress images. Even though computers can capture an incredible amount of detail in a photo, can humans actually cannot perceive this much of detail. This is the crux of lossy compression algirithms- figuring out clever ways to remove (to a certain allowable limit) detail without humans noticing (much). 
 
-![exampledog](images\imagecomp\exampledog.jpg)
+![exampledog](images/imagecomp/exampledog.jpg)
 
 For our example, let us consider an example of a cat in a hat:
 
-![excatun](images\imagecomp\excatun.jpg)
-![excatcomp](images\imagecomp\excatcomp.jpg)
+![excatun](images/imagecomp/excatun.jpg)
+![excatcomp](images/imagecomp/excatcomp.jpg)
