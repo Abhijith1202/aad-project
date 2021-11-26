@@ -248,7 +248,9 @@ We are familiar with the format of Jpeg for pictures that we see widely in out d
 
 ![exampledog](images/imagecomp/exampledog.jpg)
 
-For our example, let us consider an example of a cat in a hat:
-
+For our example, let us consider an example of a cat in a hat:<br>
+Uncompressed:
 ![excatun](images/imagecomp/excatun.jpg)
+
+Now here is the same photo, but compressed to half its size:
 ![excatcomp](images/imagecomp/excatcomp.jpg)
