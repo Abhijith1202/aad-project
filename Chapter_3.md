@@ -271,3 +271,73 @@ Notice that neither the cat nor the chair hold much colour: the blue hat and the
 <br>We can see that this doesnt look _much_ different from the original one, but  in this case we need to store information for only 4 values, instead of 16 in the uncompressed (first) one. Thus, we have reduced the amount of information to be stored to a quarter of the original required space. If we consider the blue hat in the chroma picture, we can see that there are much much bigger runs of almost-same coloured pixels, and thud we can reduce the amount of information we need to store even further. Thus, we have arrived at a simple compression algorithm, based on observation alone!
 
 This process of chroma subsampling is used in many image compression algorithms, including JPEG and MPEG. JPEG (Joint Photographic Experts Group) typically achieves 10:1 compression with little perceptible loss in image quality, and is the most widely used image compression standard. In addition to chroma subsampling, JPEG uses (8x8) <a href="https://en.wikipedia.org/wiki/Discrete_cosine_transform">_Discrete cosine transform_</a>, a zig-zag variant of run length encoding as mentioned in section 3.2 and scalar quantization.
+
+## 3.4: Audio compression
+Traditional lossless compression methods (Huffman, LZW, etc.) usually don't work well on audio compression, and hence, **lossy compression methods** are generally used. Similar to the example of image compression, there is a threshold to what the human ear can distinguish as well. Just like before, we take advantage of this to analyze an audio file and discard the sounds that are outside of our hearing capacity (this process is known as perceptual audio coding). Another interesting fact is that sudden sounds can mask other sounds for a period after it occurs (you probably observe this in diwali while bursting crackers, the ringing sound that fades after a while). This is known as _temporal masking_. Even though we might not be able to hear the sounds during this while, the computer sees those _hidden sounds_. So audio compression algorithms can safely discard that information or represent it with fewer bits. 
+
+Compression algorithms can also use the frequency limits of human ear to further mask off the sounds that exceed these limits. Some general, simple methods of audio compression besides the above method are:
+- **Silence Compression**: This method provides a way to squeeze redundancy out of sound files.
+    - It is equivalent to run length coding on normal data files. Here, the runs we encode are sequences of relative silence in a sound file. This is a lossy technique because we replace the sequences of relative silence with absolute silence
+    - For this method, certain parameters are used, like:
+        - Some threshold value to indicate the start of a silence run, and an end of one.
+        - A threshold value that specifies, below which the compression can be considered as silence.
+        - A silence code followed by a single byte, which indicates the numbers of consecutive silence codes are present. (RLE equivalence)
+    - As seen in the example for RLE, to avoid negative compresison, we may have to modify the code to signify only runs of length three or more.
+    - It allows a significant reduction of transmission bandwidth during silence period where only background noises are transmitted.
+
+- **DPCM and ADPCM(Adaptive)**: Differential pulse-code modulation is a signal encoder that uses digitally represented sampled analog signals and adds some functionalities based on the prediction of the samples of the signal.
+    - Two consecutive sample values are taken in, quantized, and the difference between the two is caluclated. This difference is then outputted
+    - Doing this reduces the short-term redundancy of the signal
+    - Using **entropy coding**(Similar to Huffman coding. The length of each codeword is approximately proportional to the negative log of the probability of occurrence of that codeword), this algorithm can be coded to further increase the compression ratio.
+    - ADPCM is a version of DPCM that reduces the necessary data bandwidth for a given signal-to-noise ratio by varying the size of the quantization step (adapts at quantization so fewer bits are used when the value is smaller).
+    - Apple has proprietary scheme called ACE/MACE. This is a lossy scheme that tries to predict where wave will go in next sample. It has a compression ratio of about 2:1.
+
+- **Linear Predictive Coding (LPC)**: It is one of the most widely used speech coding algorithm
+    - It uses a linear predictive model to get the predicted outcome of a waveform, and represents the spectral envelope of a digital signal of speech in compressed form. 
+    - LPC analyzes the speech signal by estimating the formants, removing their effects from the speech signal, and estimating the intensity and frequency of the remaining buzz. 
+    - The process of removing the formants is called **inverse filtering**, and the remaining signal after the subtraction of the filtered modeled signal is called the **residue**.
+    - LPC uses the buzz parameters and the residue to create a source signal, and uses the formants to create a filter .
+    - This can be visualised as speech is being produced (buzz) at one end of a tube (formant filter)
+    - Speech signals may vary greatly with time, and hence, LPC is done in small packets of speech signals (frames). Around 30-50 frames per second gives speech that is comprehensible and well compressed.
+
+## 3.5 LZW Compression
+LZW compression is the compression of a file into smaller file using a table-based lookup algorithm. It was invented by Abraham ****L**empel, Jacob **Z**iv, and Terry **W**elch. It is an **adaptive model**, ie, it progressively learns and updates as you read data (kind of like artificial intelligence). LZW algorithm is widely used in GIF image format and TIFF image format. It is also suitable for text files. It is a **lossless** compression algorithm.
+
+Let us take an example to illustrate how this algorithm encodes a given string. Consider the string `abcabcabcabcabc`. Let us try to understand how the algorithm works on this string. We start with an empty dictionary {}, and encoding [ ] . Now, since the dictionary is empty, and the first character is read, we read `a` and store it into the dictionary by, say {"a":1} and encode it as [ 1 ]. Now, we check the next character, `b` and add this to the dictionary as well, {"a":1,"b":2}, [ 1 2 ]. Similarly, since c is also not in the dictionary, {"a":1,"b":2,"c":3}, [ 1 2 3 ]. Next, we our index points to a, but a is already in the dictionary (ie, we know how to encode a), so read another character without encoding it, and add the pair `ab` to the dictionary, as abca`b`cabcabcabc {"a":1,"b":2,"c":3, "ab":4}, [ 1 2 3 1 ] (currently the index points to b, ie, b is to be read next). Now, since b is already in dictionary, as we've done in the earlier case, we add `bc` to the dictionary and get {"a":1,"b":2,"c":3, "ab":4, "bc":5}, [ 1 2 3 1 2 ]. Similarly, next we get `ca`, as {"a":1,"b":2,"c":3, "ab":4, "bc":5, "ca":6}, [ 1 2 3 1 2 3 ] and the string is now abcabc`a`bcabcabc. Next, we read a, then ab, both of which are in the dictionary, so we read the string `abc` into the dictionary and encode `ab`: {"a":1,"b":2,"c":3, "ab":4, "bc":5, "ca":6,**"abc":7**}, [ 1 2 3 1 2 3 **4**]. abcabcab`c`abcabc: c and ca are in dictionary, so we read `cab`, encode `ca` and move pointer to b as abcabcabca`b`cabc, {"a":1,"b":2,"c":3, "ab":4, "bc":5, "ca":6, "abc":7, **"cab":8**}, [ 1 2 3 1 2 3 4 **6** ]. Next, since b and bc are in the dict, we add `bca` to the dictionary, encode `bc` and more the pointer to a as abcabcabcabc`a`bc, {"a":1,"b":2,"c":3, "ab":4, "bc":5, "ca":6, "abc":7, "cab":8, **"bca":9**}, [ 1 2 3 1 2 3 4 6 **5** ]. Next, we see that `abc` is already in the dictionary, and the string has ended, so we encode `abc` as 7 to get [ 1 2 3 1 2 3 4 6 5 **7** ]. Thus, our entire string has been encoded: `abcabcabcabcabc` has been encoded as `1231234567`, which has reduced the number of values to be stored from 15 to 10, ie, 1.5 compression ratio, for a small string like this. Since this is an adaptive model, it can be used for much bigger strings and give better compression ratios.
+
+The encoding algorithm can be summarised as:
+    ```LZW encoding
+    1. create a symbol table (ST) associating W-bit codewords with string keys
+    2. initialise the ST with codewords for single characters
+    3. Find the longest string s in ST that is a prefix of unscanned part of the input string.
+    4. Write the W-bit codeword for s in the encoding to be sent
+    5. add the string s'=s+c, where c is the left-out next character from the input string to the ST
+    6. go back to step 3 till all characters in the input string has been read
+    7. output the encoding
+    ```
+
+An LZW compression code table can also be represented by using a **trie** data structure.  
+
+![trie](images/lzw/trie.png)
+<br> As the trie gets deeper, we get better compression, as we are encoding more number of characters with a codeword
+
+One of the main advantages of this method is that we dont have to send the dictionary to the decoder: the decoder, too makes such a lookup table on the get-go. (decoder has the dictionary for single characters). The decoding/ expansion algorithm is also similar to the decoding:
+    ```LZW decoding
+    1. create a symbol table (ST) associating W-bit codewords with string keys
+    2. initialise the ST with codewords for single characters
+    3. Read a W-bit key
+    4. Find the associated string value from ST and write it out
+    5. Update the ST
+    6. go back to step 3 till all characters in the input string has been read
+    7. output the decoded string
+    ```
+<br>For the decoded, the lookup table can be stored simply as a string array
+
+GIF format uses LZW method of compression. In this format, the symbol table is thrown away and the compressioon starts over when the symbol table fills up. Other compressions, like the Unix compression throws the symbol table away only when it is no longer effective. As we can probably guess, this algorithm doesnt yeild much compression if there are not enough repeated runs: it may even lead to negative compression in case we start with a wrong dictionary (ST).
+
+> Even though most compreission algorithms explained are really well defined and give good compression ratios, these individually are not used in the daily life, rather, a mixture of the explained algorithms are used in our computers for compression like JPEG, MPEG, ZIP etc. 
+
+> For LZW, or for much of the lossless compression algorithms in general, it is possible to generate an input or test case such that the encoded file is almost the same size as, or maybe even bigger than the un-compressed file (negative compression). A trivial example is when there are no recurring runs: any run-length encoding algorithm will struggle to get any progress in compression. Lossy compression on the other hand, permits the loss of data to a certain threshold, and _may_ overcome this situation, but in cases where loss of data is not allowed, there is nothing we can do. In short, **there is no perfect compression algorithm** till date: every compression algorithm has a trade-off.
+
+## Conclusion
+Throughout this book, we have learnt what compression is, how compression could be understood better, and paved a way for even a beginner programmer to understand various aspects of compression and different important compression algorithms. Compression algorithms is still an area of widespread research, as it is extremely important in this era where people use more than a trillion MB per day. 
