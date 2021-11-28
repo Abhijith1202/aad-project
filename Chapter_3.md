@@ -307,7 +307,8 @@ Let us take an example to illustrate how this algorithm encodes a given string. 
 
 The encoding algorithm can be summarised as:
     
-    ```LZW encoding
+    ```
+    LZW encoding
     1. create a symbol table (ST) associating W-bit codewords with string keys
     2. initialise the ST with codewords for single characters
     3. Find the longest string s in ST that is a prefix of unscanned part of the input string.
@@ -324,7 +325,8 @@ An LZW compression code table can also be represented by using a **trie** data s
 
 One of the main advantages of this method is that we dont have to send the dictionary to the decoder: the decoder, too makes such a lookup table on the get-go. (decoder has the dictionary for single characters). The decoding/ expansion algorithm is also similar to the decoding:
 
-    ```LZW decoding
+    ```
+    LZW decoding
     1. create a symbol table (ST) associating W-bit codewords with string keys
     2. initialise the ST with codewords for single characters
     3. Read a W-bit key
