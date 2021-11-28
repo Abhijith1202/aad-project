@@ -325,16 +325,16 @@ An LZW compression code table can also be represented by using a **trie** data s
 
 One of the main advantages of this method is that we dont have to send the dictionary to the decoder: the decoder, too makes such a lookup table on the get-go. (decoder has the dictionary for single characters). The decoding/ expansion algorithm is also similar to the decoding:
 
-    ```
-    LZW decoding
-    1. create a symbol table (ST) associating W-bit codewords with string keys
-    2. initialise the ST with codewords for single characters
-    3. Read a W-bit key
-    4. Find the associated string value from ST and write it out
-    5. Update the ST
-    6. go back to step 3 till all characters in the input string has been read
-    7. output the decoded string
-    ```
+```
+LZW decoding
+1. create a symbol table (ST) associating W-bit codewords with string keys
+2. initialise the ST with codewords for single characters
+3. Read a W-bit key
+4. Find the associated string value from ST and write it out
+5. Update the ST
+6. go back to step 3 till all characters in the input string has been read
+7. output the decoded string
+```
 <br>For the decoded, the lookup table can be stored simply as a string array
 
 GIF format uses LZW method of compression. In this format, the symbol table is thrown away and the compressioon starts over when the symbol table fills up. Other compressions, like the Unix compression throws the symbol table away only when it is no longer effective. As we can probably guess, this algorithm doesnt yeild much compression if there are not enough repeated runs: it may even lead to negative compression in case we start with a wrong dictionary (ST).
