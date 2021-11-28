@@ -307,16 +307,16 @@ Let us take an example to illustrate how this algorithm encodes a given string. 
 
 The encoding algorithm can be summarised as:
     
-    ```
-    LZW encoding
-    1. create a symbol table (ST) associating W-bit codewords with string keys
-    2. initialise the ST with codewords for single characters
-    3. Find the longest string s in ST that is a prefix of unscanned part of the input string.
-    4. Write the W-bit codeword for s in the encoding to be sent
-    5. add the string s'=s+c, where c is the left-out next character from the input string to the ST
-    6. go back to step 3 till all characters in the input string has been read
-    7. output the encoding
-    ```
+```
+LZW encoding
+1. create a symbol table (ST) associating W-bit codewords with string keys
+2. initialise the ST with codewords for single characters
+3. Find the longest string s in ST that is a prefix of unscanned part of the input string.
+4. Write the W-bit codeword for s in the encoding to be sent
+5. add the string s'=s+c, where c is the left-out next character from the input string to the ST
+6. go back to step 3 till all characters in the input string has been read
+7. output the encoding
+```
 
 An LZW compression code table can also be represented by using a **trie** data structure.  
 
